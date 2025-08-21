@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import './index.css';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import ReactDOM from 'react-dom/client';
+import { ThemeProvider } from '@/routes/-providers';
 import { useAuth } from './hooks/useAuth';
 import { AuthProvider } from './providers/auth-provider';
 
@@ -33,7 +34,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <AuthProvider>
-        <InnerApp />
+        <ThemeProvider>
+          <InnerApp />
+        </ThemeProvider>
       </AuthProvider>
     </StrictMode>,
   );
