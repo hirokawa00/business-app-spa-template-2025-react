@@ -11,8 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as RouteRouteImport } from './routes/route'
-import { Route as PublicNotFoundRouteImport } from './routes/_public/not-found'
-import { Route as PublicLoginRouteRouteImport } from './routes/_public/login/route'
+import { Route as publicSettionTimeoutRouteImport } from './routes/(public)/settion-timeout'
+import { Route as publicNotFoundRouteImport } from './routes/(public)/not-found'
+import { Route as publicMaintenanceRouteImport } from './routes/(public)/maintenance'
+import { Route as publicLogoutRouteImport } from './routes/(public)/logout'
+import { Route as publicLoginRouteImport } from './routes/(public)/login'
+import { Route as publicAuthErrorRouteImport } from './routes/(public)/auth-error'
 import { Route as AuthenticatedUsersRouteRouteImport } from './routes/_authenticated/users/route'
 import { Route as AuthenticatedReportRouteRouteImport } from './routes/_authenticated/report/route'
 import { Route as AuthenticatedDashboardRouteRouteImport } from './routes/_authenticated/dashboard/route'
@@ -28,14 +32,34 @@ const RouteRoute = RouteRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicNotFoundRoute = PublicNotFoundRouteImport.update({
-  id: '/_public/not-found',
+const publicSettionTimeoutRoute = publicSettionTimeoutRouteImport.update({
+  id: '/(public)/settion-timeout',
+  path: '/settion-timeout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicNotFoundRoute = publicNotFoundRouteImport.update({
+  id: '/(public)/not-found',
   path: '/not-found',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicLoginRouteRoute = PublicLoginRouteRouteImport.update({
-  id: '/_public/login',
+const publicMaintenanceRoute = publicMaintenanceRouteImport.update({
+  id: '/(public)/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicLogoutRoute = publicLogoutRouteImport.update({
+  id: '/(public)/logout',
+  path: '/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicLoginRoute = publicLoginRouteImport.update({
+  id: '/(public)/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicAuthErrorRoute = publicAuthErrorRouteImport.update({
+  id: '/(public)/auth-error',
+  path: '/auth-error',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedUsersRouteRoute = AuthenticatedUsersRouteRouteImport.update({
@@ -73,8 +97,12 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRouteRoute
   '/report': typeof AuthenticatedReportRouteRouteWithChildren
   '/users': typeof AuthenticatedUsersRouteRoute
-  '/login': typeof PublicLoginRouteRoute
-  '/not-found': typeof PublicNotFoundRoute
+  '/auth-error': typeof publicAuthErrorRoute
+  '/login': typeof publicLoginRoute
+  '/logout': typeof publicLogoutRoute
+  '/maintenance': typeof publicMaintenanceRoute
+  '/not-found': typeof publicNotFoundRoute
+  '/settion-timeout': typeof publicSettionTimeoutRoute
   '/report/': typeof AuthenticatedReportIndexRoute
   '/report/search': typeof AuthenticatedReportSearchIndexRoute
 }
@@ -82,8 +110,12 @@ export interface FileRoutesByTo {
   '/': typeof RouteRoute
   '/dashboard': typeof AuthenticatedDashboardRouteRoute
   '/users': typeof AuthenticatedUsersRouteRoute
-  '/login': typeof PublicLoginRouteRoute
-  '/not-found': typeof PublicNotFoundRoute
+  '/auth-error': typeof publicAuthErrorRoute
+  '/login': typeof publicLoginRoute
+  '/logout': typeof publicLogoutRoute
+  '/maintenance': typeof publicMaintenanceRoute
+  '/not-found': typeof publicNotFoundRoute
+  '/settion-timeout': typeof publicSettionTimeoutRoute
   '/report': typeof AuthenticatedReportIndexRoute
   '/report/search': typeof AuthenticatedReportSearchIndexRoute
 }
@@ -94,8 +126,12 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteRoute
   '/_authenticated/report': typeof AuthenticatedReportRouteRouteWithChildren
   '/_authenticated/users': typeof AuthenticatedUsersRouteRoute
-  '/_public/login': typeof PublicLoginRouteRoute
-  '/_public/not-found': typeof PublicNotFoundRoute
+  '/(public)/auth-error': typeof publicAuthErrorRoute
+  '/(public)/login': typeof publicLoginRoute
+  '/(public)/logout': typeof publicLogoutRoute
+  '/(public)/maintenance': typeof publicMaintenanceRoute
+  '/(public)/not-found': typeof publicNotFoundRoute
+  '/(public)/settion-timeout': typeof publicSettionTimeoutRoute
   '/_authenticated/report/': typeof AuthenticatedReportIndexRoute
   '/_authenticated/report/search/': typeof AuthenticatedReportSearchIndexRoute
 }
@@ -106,8 +142,12 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/report'
     | '/users'
+    | '/auth-error'
     | '/login'
+    | '/logout'
+    | '/maintenance'
     | '/not-found'
+    | '/settion-timeout'
     | '/report/'
     | '/report/search'
   fileRoutesByTo: FileRoutesByTo
@@ -115,8 +155,12 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/users'
+    | '/auth-error'
     | '/login'
+    | '/logout'
+    | '/maintenance'
     | '/not-found'
+    | '/settion-timeout'
     | '/report'
     | '/report/search'
   id:
@@ -126,8 +170,12 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/report'
     | '/_authenticated/users'
-    | '/_public/login'
-    | '/_public/not-found'
+    | '/(public)/auth-error'
+    | '/(public)/login'
+    | '/(public)/logout'
+    | '/(public)/maintenance'
+    | '/(public)/not-found'
+    | '/(public)/settion-timeout'
     | '/_authenticated/report/'
     | '/_authenticated/report/search/'
   fileRoutesById: FileRoutesById
@@ -135,8 +183,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   RouteRoute: typeof RouteRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  PublicLoginRouteRoute: typeof PublicLoginRouteRoute
-  PublicNotFoundRoute: typeof PublicNotFoundRoute
+  publicAuthErrorRoute: typeof publicAuthErrorRoute
+  publicLoginRoute: typeof publicLoginRoute
+  publicLogoutRoute: typeof publicLogoutRoute
+  publicMaintenanceRoute: typeof publicMaintenanceRoute
+  publicNotFoundRoute: typeof publicNotFoundRoute
+  publicSettionTimeoutRoute: typeof publicSettionTimeoutRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -155,18 +207,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_public/not-found': {
-      id: '/_public/not-found'
-      path: '/not-found'
-      fullPath: '/not-found'
-      preLoaderRoute: typeof PublicNotFoundRouteImport
+    '/(public)/settion-timeout': {
+      id: '/(public)/settion-timeout'
+      path: '/settion-timeout'
+      fullPath: '/settion-timeout'
+      preLoaderRoute: typeof publicSettionTimeoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_public/login': {
-      id: '/_public/login'
+    '/(public)/not-found': {
+      id: '/(public)/not-found'
+      path: '/not-found'
+      fullPath: '/not-found'
+      preLoaderRoute: typeof publicNotFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/maintenance': {
+      id: '/(public)/maintenance'
+      path: '/maintenance'
+      fullPath: '/maintenance'
+      preLoaderRoute: typeof publicMaintenanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/logout': {
+      id: '/(public)/logout'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof publicLogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/login': {
+      id: '/(public)/login'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof PublicLoginRouteRouteImport
+      preLoaderRoute: typeof publicLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/auth-error': {
+      id: '/(public)/auth-error'
+      path: '/auth-error'
+      fullPath: '/auth-error'
+      preLoaderRoute: typeof publicAuthErrorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/users': {
@@ -242,8 +322,12 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   RouteRoute: RouteRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  PublicLoginRouteRoute: PublicLoginRouteRoute,
-  PublicNotFoundRoute: PublicNotFoundRoute,
+  publicAuthErrorRoute: publicAuthErrorRoute,
+  publicLoginRoute: publicLoginRoute,
+  publicLogoutRoute: publicLogoutRoute,
+  publicMaintenanceRoute: publicMaintenanceRoute,
+  publicNotFoundRoute: publicNotFoundRoute,
+  publicSettionTimeoutRoute: publicSettionTimeoutRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -51,10 +51,6 @@ const data = {
           title: 'Report',
           url: '/report',
         },
-        {
-          title: 'Settings',
-          url: '#',
-        },
       ],
     },
     {
@@ -72,8 +68,20 @@ const data = {
           url: '/NotFound',
         },
         {
-          title: 'Settings',
-          url: '#',
+          title: 'Maintenance',
+          url: '/maintenance',
+        },
+        {
+          title: 'AuthError',
+          url: '/auth-error',
+        },
+        {
+          title: 'SettionTimeOut',
+          url: '/settion-timeout',
+        },
+        {
+          title: 'Logout',
+          url: '/logout',
         },
       ],
     },
