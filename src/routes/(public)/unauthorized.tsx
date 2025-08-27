@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Shield } from 'lucide-react';
 import { ActionSection, AnimatedIcon, HelpSection } from './-components/public-shared';
 
-export const Route = createFileRoute('/(public)/auth-error')({
+export const Route = createFileRoute('/(public)/unauthorized')({
   component: AuthErrorPage,
 });
 

@@ -51,6 +51,10 @@ const data = {
           title: 'Report',
           url: '/report',
         },
+        {
+          title: 'ErrorTest',
+          url: '/error-test',
+        },
       ],
     },
     {
@@ -72,8 +76,8 @@ const data = {
           url: '/maintenance',
         },
         {
-          title: 'AuthError',
-          url: '/auth-error',
+          title: 'Unauthorized',
+          url: '/unauthorized',
         },
         {
           title: 'SettionTimeOut',

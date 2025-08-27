@@ -15,7 +15,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       <TanStackRouterDevtools />
     </>
   ),
-  notFoundComponent: () => <NotFoundRedirect />,
+  notFoundComponent: NotFoundRedirect,
+  errorComponent: ErrorBoundaryComponent,
 });
 
 export function NotFoundRedirect() {
@@ -28,4 +29,18 @@ export function NotFoundRedirect() {
   }, [navigate, fromPath]);
 
   return null;
+}
+
+export function ErrorBoundaryComponent({ error }: { error: Error }) {
+  const navigate = useNavigate();
+
+  console.log('error', error);
+  useEffect(() => {
+    if (error) {
+      navigate({ to: '/error', search: { message: error.message }, replace: true });
+    }
+  }, [error, navigate]);
+
+  // エラー発生中は一瞬これが出るけど、即 /error に飛ばす
+  return <div>Redirecting to error page...</div>;
 }

@@ -17,16 +17,12 @@ export default function NotFoundPage() {
 
   const helpItems = [
     {
-      question: 'システムの改善とアップデートを実施中',
-      description: 'パフォーマンス向上とセキュリティ強化のため',
+      question: 'URLを入力しアクセス',
+      description: 'URLが間違っている可能性があります。',
     },
     {
-      question: 'データベースのメンテナンス',
-      description: 'データ整合性の確保と最適化を行っています',
-    },
-    {
-      question: '新機能の追加準備',
-      description: 'より良いユーザー体験を提供するため',
+      question: '削除または移動されたページにアクセス',
+      description: '一定時間間隔をあけて再度アクセスをお願いします。',
     },
   ];
 

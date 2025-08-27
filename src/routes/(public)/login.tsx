@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { ArrowRight, Bell, Lock, Shield, Sparkles, Zap } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/(public)/login')({

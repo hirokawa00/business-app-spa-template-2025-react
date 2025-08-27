@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_authenticated')({
     }
   },
   component: AuthenticatedLayout,
-  notFoundComponent: () => <NotFoundRedirect />,
+  notFoundComponent: NotFoundRedirect,
 });
 
 function AuthenticatedLayout() {
