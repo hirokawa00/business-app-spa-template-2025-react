@@ -1,5 +1,6 @@
-import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
+import { createRootRouteWithContext, Outlet, useNavigate, useRouter } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { useEffect } from 'react';
 import type { AuthContextType } from '@/providers/auth-provider';
 
 interface MyRouterContext {
@@ -14,4 +15,17 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       <TanStackRouterDevtools />
     </>
   ),
+  notFoundComponent: () => <NotFoundRedirect />,
 });
+
+export function NotFoundRedirect() {
+  const navigate = useNavigate();
+  const router = useRouter();
+  const fromPath = router.state.location.pathname;
+
+  useEffect(() => {
+    navigate({ to: '/not-found', search: { from: fromPath } });
+  }, [navigate, fromPath]);
+
+  return null;
+}
