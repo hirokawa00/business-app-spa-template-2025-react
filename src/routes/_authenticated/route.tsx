@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import { NotFoundRedirect } from './__root';
+import { NotFoundRedirect } from '../__root';
 import { Header } from './-components/header';
 import { AppSidebar } from './-components/sidebar';
 

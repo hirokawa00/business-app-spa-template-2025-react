@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_authenticated/dashboard')({
+export const Route = createFileRoute('/_authenticated/dashboard/')({
   component: DashboardRoute,
 });
 
-function DashboardRoute() {
+export function DashboardRoute() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
       <div className="grid auto-rows-min gap-4 md:grid-cols-3">

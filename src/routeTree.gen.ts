@@ -9,7 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as RouteRouteImport } from './routes/route'
 import { Route as AuthenticatedErrorTestRouteImport } from './routes/_authenticated/error-test'
 import { Route as publicUnauthorizedRouteImport } from './routes/(public)/unauthorized'
@@ -21,11 +21,11 @@ import { Route as publicLoginRouteImport } from './routes/(public)/login'
 import { Route as publicErrorRouteImport } from './routes/(public)/error'
 import { Route as AuthenticatedUsersRouteRouteImport } from './routes/_authenticated/users/route'
 import { Route as AuthenticatedReportRouteRouteImport } from './routes/_authenticated/report/route'
-import { Route as AuthenticatedDashboardRouteRouteImport } from './routes/_authenticated/dashboard/route'
 import { Route as AuthenticatedReportIndexRouteImport } from './routes/_authenticated/report/index'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedReportSearchIndexRouteImport } from './routes/_authenticated/report/search/index'
 
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
@@ -37,7 +37,7 @@ const RouteRoute = RouteRouteImport.update({
 const AuthenticatedErrorTestRoute = AuthenticatedErrorTestRouteImport.update({
   id: '/error-test',
   path: '/error-test',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const publicUnauthorizedRoute = publicUnauthorizedRouteImport.update({
   id: '/(public)/unauthorized',
@@ -77,25 +77,25 @@ const publicErrorRoute = publicErrorRouteImport.update({
 const AuthenticatedUsersRouteRoute = AuthenticatedUsersRouteRouteImport.update({
   id: '/users',
   path: '/users',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedReportRouteRoute =
   AuthenticatedReportRouteRouteImport.update({
     id: '/report',
     path: '/report',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedDashboardRouteRoute =
-  AuthenticatedDashboardRouteRouteImport.update({
-    id: '/dashboard',
-    path: '/dashboard',
-    getParentRoute: () => AuthenticatedRoute,
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedReportIndexRoute =
   AuthenticatedReportIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedReportRouteRoute,
+  } as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedReportSearchIndexRoute =
   AuthenticatedReportSearchIndexRouteImport.update({
@@ -106,7 +106,6 @@ const AuthenticatedReportSearchIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof RouteRoute
-  '/dashboard': typeof AuthenticatedDashboardRouteRoute
   '/report': typeof AuthenticatedReportRouteRouteWithChildren
   '/users': typeof AuthenticatedUsersRouteRoute
   '/error': typeof publicErrorRoute
@@ -117,12 +116,12 @@ export interface FileRoutesByFullPath {
   '/settion-timeout': typeof publicSettionTimeoutRoute
   '/unauthorized': typeof publicUnauthorizedRoute
   '/error-test': typeof AuthenticatedErrorTestRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/report/': typeof AuthenticatedReportIndexRoute
   '/report/search': typeof AuthenticatedReportSearchIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof RouteRoute
-  '/dashboard': typeof AuthenticatedDashboardRouteRoute
   '/users': typeof AuthenticatedUsersRouteRoute
   '/error': typeof publicErrorRoute
   '/login': typeof publicLoginRoute
@@ -132,14 +131,14 @@ export interface FileRoutesByTo {
   '/settion-timeout': typeof publicSettionTimeoutRoute
   '/unauthorized': typeof publicUnauthorizedRoute
   '/error-test': typeof AuthenticatedErrorTestRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/report': typeof AuthenticatedReportIndexRoute
   '/report/search': typeof AuthenticatedReportSearchIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof RouteRoute
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_authenticated/report': typeof AuthenticatedReportRouteRouteWithChildren
   '/_authenticated/users': typeof AuthenticatedUsersRouteRoute
   '/(public)/error': typeof publicErrorRoute
@@ -150,6 +149,7 @@ export interface FileRoutesById {
   '/(public)/settion-timeout': typeof publicSettionTimeoutRoute
   '/(public)/unauthorized': typeof publicUnauthorizedRoute
   '/_authenticated/error-test': typeof AuthenticatedErrorTestRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/report/': typeof AuthenticatedReportIndexRoute
   '/_authenticated/report/search/': typeof AuthenticatedReportSearchIndexRoute
 }
@@ -157,7 +157,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/dashboard'
     | '/report'
     | '/users'
     | '/error'
@@ -168,12 +167,12 @@ export interface FileRouteTypes {
     | '/settion-timeout'
     | '/unauthorized'
     | '/error-test'
+    | '/dashboard'
     | '/report/'
     | '/report/search'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/dashboard'
     | '/users'
     | '/error'
     | '/login'
@@ -183,13 +182,13 @@ export interface FileRouteTypes {
     | '/settion-timeout'
     | '/unauthorized'
     | '/error-test'
+    | '/dashboard'
     | '/report'
     | '/report/search'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
-    | '/_authenticated/dashboard'
     | '/_authenticated/report'
     | '/_authenticated/users'
     | '/(public)/error'
@@ -200,13 +199,14 @@ export interface FileRouteTypes {
     | '/(public)/settion-timeout'
     | '/(public)/unauthorized'
     | '/_authenticated/error-test'
+    | '/_authenticated/dashboard/'
     | '/_authenticated/report/'
     | '/_authenticated/report/search/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   RouteRoute: typeof RouteRoute
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   publicErrorRoute: typeof publicErrorRoute
   publicLoginRoute: typeof publicLoginRoute
   publicLogoutRoute: typeof publicLogoutRoute
@@ -222,7 +222,7 @@ declare module '@tanstack/react-router' {
       id: '/_authenticated'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -237,7 +237,7 @@ declare module '@tanstack/react-router' {
       path: '/error-test'
       fullPath: '/error-test'
       preLoaderRoute: typeof AuthenticatedErrorTestRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/(public)/unauthorized': {
       id: '/(public)/unauthorized'
@@ -293,21 +293,14 @@ declare module '@tanstack/react-router' {
       path: '/users'
       fullPath: '/users'
       preLoaderRoute: typeof AuthenticatedUsersRouteRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/report': {
       id: '/_authenticated/report'
       path: '/report'
       fullPath: '/report'
       preLoaderRoute: typeof AuthenticatedReportRouteRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/report/': {
       id: '/_authenticated/report/'
@@ -315,6 +308,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/report/'
       preLoaderRoute: typeof AuthenticatedReportIndexRouteImport
       parentRoute: typeof AuthenticatedReportRouteRoute
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/report/search/': {
       id: '/_authenticated/report/search/'
@@ -342,27 +342,26 @@ const AuthenticatedReportRouteRouteWithChildren =
     AuthenticatedReportRouteRouteChildren,
   )
 
-interface AuthenticatedRouteChildren {
-  AuthenticatedDashboardRouteRoute: typeof AuthenticatedDashboardRouteRoute
+interface AuthenticatedRouteRouteChildren {
   AuthenticatedReportRouteRoute: typeof AuthenticatedReportRouteRouteWithChildren
   AuthenticatedUsersRouteRoute: typeof AuthenticatedUsersRouteRoute
   AuthenticatedErrorTestRoute: typeof AuthenticatedErrorTestRoute
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedDashboardRouteRoute: AuthenticatedDashboardRouteRoute,
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedReportRouteRoute: AuthenticatedReportRouteRouteWithChildren,
   AuthenticatedUsersRouteRoute: AuthenticatedUsersRouteRoute,
   AuthenticatedErrorTestRoute: AuthenticatedErrorTestRoute,
+  AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
 }
 
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
-)
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   RouteRoute: RouteRoute,
-  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   publicErrorRoute: publicErrorRoute,
   publicLoginRoute: publicLoginRoute,
   publicLogoutRoute: publicLogoutRoute,
