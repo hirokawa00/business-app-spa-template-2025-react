@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Clock, Shield } from 'lucide-react';
 import { ActionSection, AnimatedIcon, HelpSection } from './-components/public-shared';
 
-export const Route = createFileRoute('/(public)/settion-timeout')({
+export const Route = createFileRoute('/(public)/session-timeout')({
   component: SessionTimeoutPage,
 });
 

@@ -21,15 +21,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+
 import { Separator } from '@/components/ui/separator';
-import { DataTableFacetedFilter } from './-fileter';
+import { DataTableFacetedFilter } from './-components/fileter';
 
 // Table コンポーネントを直接定義
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
@@ -646,7 +640,7 @@ export default function UserListPage() {
   );
 }
 
-export const Route = createFileRoute('/_authenticated/users')({
+export const Route = createFileRoute('/_authenticated/users/')({
   component: RouteComponent,
 });
 

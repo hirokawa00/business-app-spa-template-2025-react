@@ -13,14 +13,14 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as RouteRouteImport } from './routes/route'
 import { Route as AuthenticatedErrorTestRouteImport } from './routes/_authenticated/error-test'
 import { Route as publicUnauthorizedRouteImport } from './routes/(public)/unauthorized'
-import { Route as publicSettionTimeoutRouteImport } from './routes/(public)/settion-timeout'
+import { Route as publicSessionTimeoutRouteImport } from './routes/(public)/session-timeout'
 import { Route as publicNotFoundRouteImport } from './routes/(public)/not-found'
 import { Route as publicMaintenanceRouteImport } from './routes/(public)/maintenance'
 import { Route as publicLogoutRouteImport } from './routes/(public)/logout'
 import { Route as publicLoginRouteImport } from './routes/(public)/login'
 import { Route as publicErrorRouteImport } from './routes/(public)/error'
-import { Route as AuthenticatedUsersRouteRouteImport } from './routes/_authenticated/users/route'
 import { Route as AuthenticatedReportRouteRouteImport } from './routes/_authenticated/report/route'
+import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
 import { Route as AuthenticatedReportIndexRouteImport } from './routes/_authenticated/report/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedReportSearchIndexRouteImport } from './routes/_authenticated/report/search/index'
@@ -44,9 +44,9 @@ const publicUnauthorizedRoute = publicUnauthorizedRouteImport.update({
   path: '/unauthorized',
   getParentRoute: () => rootRouteImport,
 } as any)
-const publicSettionTimeoutRoute = publicSettionTimeoutRouteImport.update({
-  id: '/(public)/settion-timeout',
-  path: '/settion-timeout',
+const publicSessionTimeoutRoute = publicSessionTimeoutRouteImport.update({
+  id: '/(public)/session-timeout',
+  path: '/session-timeout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const publicNotFoundRoute = publicNotFoundRouteImport.update({
@@ -74,17 +74,17 @@ const publicErrorRoute = publicErrorRouteImport.update({
   path: '/error',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedUsersRouteRoute = AuthenticatedUsersRouteRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedReportRouteRoute =
   AuthenticatedReportRouteRouteImport.update({
     id: '/report',
     path: '/report',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexRouteImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedReportIndexRoute =
   AuthenticatedReportIndexRouteImport.update({
     id: '/',
@@ -107,32 +107,32 @@ const AuthenticatedReportSearchIndexRoute =
 export interface FileRoutesByFullPath {
   '/': typeof RouteRoute
   '/report': typeof AuthenticatedReportRouteRouteWithChildren
-  '/users': typeof AuthenticatedUsersRouteRoute
   '/error': typeof publicErrorRoute
   '/login': typeof publicLoginRoute
   '/logout': typeof publicLogoutRoute
   '/maintenance': typeof publicMaintenanceRoute
   '/not-found': typeof publicNotFoundRoute
-  '/settion-timeout': typeof publicSettionTimeoutRoute
+  '/session-timeout': typeof publicSessionTimeoutRoute
   '/unauthorized': typeof publicUnauthorizedRoute
   '/error-test': typeof AuthenticatedErrorTestRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/report/': typeof AuthenticatedReportIndexRoute
+  '/users': typeof AuthenticatedUsersIndexRoute
   '/report/search': typeof AuthenticatedReportSearchIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof RouteRoute
-  '/users': typeof AuthenticatedUsersRouteRoute
   '/error': typeof publicErrorRoute
   '/login': typeof publicLoginRoute
   '/logout': typeof publicLogoutRoute
   '/maintenance': typeof publicMaintenanceRoute
   '/not-found': typeof publicNotFoundRoute
-  '/settion-timeout': typeof publicSettionTimeoutRoute
+  '/session-timeout': typeof publicSessionTimeoutRoute
   '/unauthorized': typeof publicUnauthorizedRoute
   '/error-test': typeof AuthenticatedErrorTestRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/report': typeof AuthenticatedReportIndexRoute
+  '/users': typeof AuthenticatedUsersIndexRoute
   '/report/search': typeof AuthenticatedReportSearchIndexRoute
 }
 export interface FileRoutesById {
@@ -140,17 +140,17 @@ export interface FileRoutesById {
   '/': typeof RouteRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_authenticated/report': typeof AuthenticatedReportRouteRouteWithChildren
-  '/_authenticated/users': typeof AuthenticatedUsersRouteRoute
   '/(public)/error': typeof publicErrorRoute
   '/(public)/login': typeof publicLoginRoute
   '/(public)/logout': typeof publicLogoutRoute
   '/(public)/maintenance': typeof publicMaintenanceRoute
   '/(public)/not-found': typeof publicNotFoundRoute
-  '/(public)/settion-timeout': typeof publicSettionTimeoutRoute
+  '/(public)/session-timeout': typeof publicSessionTimeoutRoute
   '/(public)/unauthorized': typeof publicUnauthorizedRoute
   '/_authenticated/error-test': typeof AuthenticatedErrorTestRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/report/': typeof AuthenticatedReportIndexRoute
+  '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
   '/_authenticated/report/search/': typeof AuthenticatedReportSearchIndexRoute
 }
 export interface FileRouteTypes {
@@ -158,49 +158,49 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/report'
-    | '/users'
     | '/error'
     | '/login'
     | '/logout'
     | '/maintenance'
     | '/not-found'
-    | '/settion-timeout'
+    | '/session-timeout'
     | '/unauthorized'
     | '/error-test'
     | '/dashboard'
     | '/report/'
+    | '/users'
     | '/report/search'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/users'
     | '/error'
     | '/login'
     | '/logout'
     | '/maintenance'
     | '/not-found'
-    | '/settion-timeout'
+    | '/session-timeout'
     | '/unauthorized'
     | '/error-test'
     | '/dashboard'
     | '/report'
+    | '/users'
     | '/report/search'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/_authenticated/report'
-    | '/_authenticated/users'
     | '/(public)/error'
     | '/(public)/login'
     | '/(public)/logout'
     | '/(public)/maintenance'
     | '/(public)/not-found'
-    | '/(public)/settion-timeout'
+    | '/(public)/session-timeout'
     | '/(public)/unauthorized'
     | '/_authenticated/error-test'
     | '/_authenticated/dashboard/'
     | '/_authenticated/report/'
+    | '/_authenticated/users/'
     | '/_authenticated/report/search/'
   fileRoutesById: FileRoutesById
 }
@@ -212,7 +212,7 @@ export interface RootRouteChildren {
   publicLogoutRoute: typeof publicLogoutRoute
   publicMaintenanceRoute: typeof publicMaintenanceRoute
   publicNotFoundRoute: typeof publicNotFoundRoute
-  publicSettionTimeoutRoute: typeof publicSettionTimeoutRoute
+  publicSessionTimeoutRoute: typeof publicSessionTimeoutRoute
   publicUnauthorizedRoute: typeof publicUnauthorizedRoute
 }
 
@@ -246,11 +246,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicUnauthorizedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(public)/settion-timeout': {
-      id: '/(public)/settion-timeout'
-      path: '/settion-timeout'
-      fullPath: '/settion-timeout'
-      preLoaderRoute: typeof publicSettionTimeoutRouteImport
+    '/(public)/session-timeout': {
+      id: '/(public)/session-timeout'
+      path: '/session-timeout'
+      fullPath: '/session-timeout'
+      preLoaderRoute: typeof publicSessionTimeoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(public)/not-found': {
@@ -288,18 +288,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicErrorRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/users': {
-      id: '/_authenticated/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof AuthenticatedUsersRouteRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/report': {
       id: '/_authenticated/report'
       path: '/report'
       fullPath: '/report'
       preLoaderRoute: typeof AuthenticatedReportRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/users/': {
+      id: '/_authenticated/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof AuthenticatedUsersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/report/': {
@@ -344,16 +344,16 @@ const AuthenticatedReportRouteRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedReportRouteRoute: typeof AuthenticatedReportRouteRouteWithChildren
-  AuthenticatedUsersRouteRoute: typeof AuthenticatedUsersRouteRoute
   AuthenticatedErrorTestRoute: typeof AuthenticatedErrorTestRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedReportRouteRoute: AuthenticatedReportRouteRouteWithChildren,
-  AuthenticatedUsersRouteRoute: AuthenticatedUsersRouteRoute,
   AuthenticatedErrorTestRoute: AuthenticatedErrorTestRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -367,7 +367,7 @@ const rootRouteChildren: RootRouteChildren = {
   publicLogoutRoute: publicLogoutRoute,
   publicMaintenanceRoute: publicMaintenanceRoute,
   publicNotFoundRoute: publicNotFoundRoute,
-  publicSettionTimeoutRoute: publicSettionTimeoutRoute,
+  publicSessionTimeoutRoute: publicSessionTimeoutRoute,
   publicUnauthorizedRoute: publicUnauthorizedRoute,
 }
 export const routeTree = rootRouteImport
