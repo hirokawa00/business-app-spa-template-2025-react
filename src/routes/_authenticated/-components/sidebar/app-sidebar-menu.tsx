@@ -12,11 +12,12 @@ import {
   User,
   WrenchIcon,
 } from 'lucide-react';
+import type { AppRoutePaths } from '@/types/route';
 
 export interface Group {
   groupLabel: string;
   menus: {
-    href: string;
+    href: AppRoutePaths;
     label: string;
     active?: boolean;
     icon: LucideIcon;

@@ -20,7 +20,6 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { getMenuList } from './app-sidebar-menu';
-import { NavUser } from './nav-user';
 
 /**
  * サイドバー
