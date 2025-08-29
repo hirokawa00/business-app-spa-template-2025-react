@@ -21,8 +21,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
+import { TableSizeToggle, useTableSize } from '@/routes/_authenticated/-hooks/use-table-size';
 import { DataTableFacetedFilter } from './-components/fileter';
 
 // Table コンポーネントを直接定義
@@ -428,6 +429,7 @@ export default function UserListPage() {
   const [roleFilter, setRoleFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [departmentFilter, setDepartmentFilter] = useState('all');
+  const { size, setSize, className } = useTableSize(); // ← hookで状態管理
 
   // フィルター済みデータ
   const filteredData = useMemo(() => {
@@ -487,6 +489,7 @@ export default function UserListPage() {
 
               <Separator orientation="vertical" className="border-2 mx-2" />
 
+              <TableSizeToggle size={size} setSize={setSize} />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="h-auto">
@@ -528,7 +531,7 @@ export default function UserListPage() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto">
+      <div className={cn('flex-1 overflow-auto', className)}>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -571,7 +574,7 @@ export default function UserListPage() {
 
       {/* フッター部 - 固定 */}
       <div className="sticky bottom-0 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 py-3">
+        <div className="mx-auto px-4 py-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <span className="text-sm text-muted-foreground">
