@@ -17,9 +17,13 @@ import {
 } from '@/components/ui/sidebar';
 
 export function NavUser({
-  user,
+  user = {
+    name: 'ゲストユーザー',
+    email: 'guest@example.com',
+    avatar: '/default-avatar.png',
+  },
 }: {
-  user: {
+  user?: {
     name: string;
     email: string;
     avatar: string;

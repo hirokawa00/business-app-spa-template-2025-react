@@ -1,21 +1,7 @@
 import { Link, useLocation } from '@tanstack/react-router';
-import {
-  AlertTriangleIcon,
-  ChevronRight,
-  Database,
-  GalleryVerticalEnd,
-  Grid2x2CheckIcon,
-  HomeIcon,
-  LogInIcon,
-  LogOutIcon,
-  type LucideIcon,
-  SearchXIcon,
-  ShieldAlertIcon,
-  TimerIcon,
-  User,
-  WrenchIcon,
-} from 'lucide-react';
+import { ChevronRight, GalleryVerticalEnd, Pin, PinOff } from 'lucide-react';
 import type * as React from 'react';
+import { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   Sidebar,
@@ -31,123 +17,38 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
+  useSidebar,
 } from '@/components/ui/sidebar';
+import { getMenuList } from './app-sidebar-menu';
+import { NavUser } from './nav-user';
 
-interface Group {
-  groupLabel: string;
-  menus: {
-    href: string;
-    label: string;
-    active?: boolean;
-    icon: LucideIcon;
-    submenus: {
-      href: string;
-      label: string;
-      active: boolean;
-      icon?: LucideIcon;
-    }[];
-  }[];
-}
-
-export function getMenuList(pathname: string): Group[] {
-  return [
-    {
-      groupLabel: '',
-      menus: [
-        {
-          href: '/',
-          label: 'Home',
-          active: pathname === '/dashboard',
-          icon: HomeIcon,
-          submenus: [],
-        },
-      ],
-    },
-    {
-      groupLabel: 'Authenticated',
-      menus: [
-        {
-          href: '',
-          label: 'Data view',
-          active: pathname.includes('/users') || pathname.includes('/report'),
-          icon: Grid2x2CheckIcon,
-          submenus: [
-            {
-              href: '/users',
-              label: 'Users',
-              icon: User,
-              active: pathname.includes('/users'),
-            },
-            {
-              href: '/report',
-              label: 'Report',
-              icon: Database,
-              active: pathname.includes('/report'),
-            },
-          ],
-        },
-      ],
-    },
-    {
-      groupLabel: 'Public',
-      menus: [
-        {
-          href: '/error',
-          label: 'Error',
-          icon: AlertTriangleIcon, // 汎用エラー
-          submenus: [],
-        },
-        {
-          href: '/login',
-          label: 'Login',
-          icon: LogInIcon, // ログイン
-          submenus: [],
-        },
-        {
-          href: '/logout',
-          label: 'Logout',
-          icon: LogOutIcon, // ログアウト
-          submenus: [],
-        },
-        {
-          href: '/maintenance',
-          label: 'Maintenance',
-          icon: WrenchIcon, // メンテナンス
-          submenus: [],
-        },
-        {
-          href: '/not-found',
-          label: 'NotFound',
-          icon: SearchXIcon, // 見つからない
-          submenus: [],
-        },
-        {
-          href: '/session-timeout',
-          label: 'Session Timeout',
-          icon: TimerIcon, // セッション切れ
-          submenus: [],
-        },
-        {
-          href: '/unauthorized',
-          label: 'Unauthorized',
-          icon: ShieldAlertIcon, // 認可エラー
-          submenus: [],
-        },
-      ],
-    },
-  ];
-}
-
+/**
+ * サイドバー
+ * @param param0
+ * @returns
+ */
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { pathname } = useLocation();
+  const { setOpen } = useSidebar();
   const menuList = getMenuList(pathname);
+  const [pinned, setPinned] = useState(false);
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar
+      collapsible="icon"
+      {...props}
+      onMouseEnter={() => {
+        if (!pinned) setOpen(true);
+      }}
+      onMouseLeave={() => {
+        if (!pinned) setOpen(false);
+      }}
+    >
       <SidebarHeader>
         <SidebarMenuButton
           size="lg"
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          onClick={() => setPinned(!pinned)}
         >
           <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
             <GalleryVerticalEnd className="size-4" />
@@ -156,7 +57,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <span className="truncate font-medium">activeTeam</span>
             <span className="truncate text-xs">activeTeam</span>
           </div>
-          {/* <ChevronsUpDown className="ml-auto" /> */}
+          <div>{pinned ? <Pin className="h-5 w-5" /> : <PinOff className="h-5 w-5" />}</div>
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
@@ -224,7 +125,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>
+      <SidebarFooter />
       <SidebarRail />
     </Sidebar>
   );

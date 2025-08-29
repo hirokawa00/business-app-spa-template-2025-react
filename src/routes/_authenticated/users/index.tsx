@@ -261,60 +261,6 @@ const sampleUsers: User[] = [
     department: '人事部',
     joinDate: '2023-08-25',
   },
-  {
-    id: '1',
-    name: '田中 太郎',
-    email: 'tanaka@example.com',
-    role: '管理者',
-    status: 'active',
-    department: '開発部',
-    joinDate: '2023-01-15',
-  },
-  {
-    id: '2',
-    name: '佐藤 花子',
-    email: 'sato@example.com',
-    role: '一般ユーザー',
-    status: 'active',
-    department: '営業部',
-    joinDate: '2023-03-20',
-  },
-  {
-    id: '3',
-    name: '鈴木 次郎',
-    email: 'suzuki@example.com',
-    role: 'マネージャー',
-    status: 'inactive',
-    department: '人事部',
-    joinDate: '2022-11-10',
-  },
-  {
-    id: '4',
-    name: '高橋 美咲',
-    email: 'takahashi@example.com',
-    role: '一般ユーザー',
-    status: 'pending',
-    department: '開発部',
-    joinDate: '2023-12-01',
-  },
-  {
-    id: '5',
-    name: '山田 健一',
-    email: 'yamada@example.com',
-    role: '管理者',
-    status: 'active',
-    department: '営業部',
-    joinDate: '2022-05-18',
-  },
-  {
-    id: '6',
-    name: '渡辺 由美',
-    email: 'watanabe@example.com',
-    role: 'マネージャー',
-    status: 'active',
-    department: '人事部',
-    joinDate: '2023-08-25',
-  },
 ];
 
 // ステータスバッジコンポーネント
@@ -517,10 +463,10 @@ export default function UserListPage() {
   });
 
   return (
-    <div className="mx-full space-y-1 p-2">
+    <div className="mx-full space-y-1 p-2 flex flex-col h-full">
       {/* ヘッダー */}
       <div className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center  py-1">
           <div className="flex flex-col gap-4 background h-8">
             <div className="flex h-8 space-x-2">
               {/* 全体検索 */}
