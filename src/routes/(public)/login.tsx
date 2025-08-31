@@ -1,196 +1,176 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { ArrowRight, Bell, Lock, Shield, Sparkles, Zap } from 'lucide-react';
+
+import {
+  ArrowRight,
+  CheckCircle,
+  Chrome,
+  Eye,
+  EyeOff,
+  Github,
+  Lock,
+  Mail,
+  Moon,
+  Shield,
+  Sun,
+  User,
+  Zap,
+} from 'lucide-react';
+import type React from 'react';
 import { useEffect, useState } from 'react';
+import { ModeToggle } from '@/components/mode-toggle';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export const Route = createFileRoute('/(public)/login')({
   component: LoginRoute,
 });
 
-// 管理者からのお知らせデータ
-const adminNotifications = [
-  {
-    id: 1,
-    title: 'システムメンテナンス',
-    content: '9/1 2:00-4:00 メンテナンス実施予定',
-    type: 'maintenance',
-    date: '2025-08-25',
-  },
-  {
-    id: 2,
-    title: 'セキュリティ更新',
-    content: '新しいセキュリティポリシーを適用しました',
-    type: 'security',
-    date: '2025-08-20',
-  },
-  {
-    id: 3,
-    title: '新機能リリース',
-    content: 'AIアシスタント機能が利用可能になりました',
-    type: 'feature',
-    date: '2025-08-15',
-  },
-];
+// 型定義
 
-const FloatingShape = ({ className, delay = 0 }: { className: string; delay?: number }) => (
-  <div
-    className={`absolute rounded-full opacity-20 animate-pulse ${className}`}
-    style={{ animationDelay: `${delay}s` }}
-  />
+interface AuthState {
+  isLoading: boolean;
+  error: string | null;
+  isSuccess: boolean;
+}
+
+// 特徴カード
+const FeatureCard: React.FC<{
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}> = ({ icon, title, description }) => (
+  <div className="flex items-start gap-3 p-4 rounded-lg bg-card/50 border border-border/50">
+    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+      {icon}
+    </div>
+    <div>
+      <h3 className="font-semibold text-sm mb-1">{title}</h3>
+      <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
+    </div>
+  </div>
 );
 
-export function LoginRoute() {
+// メインログインページコンポーネント
+function LoginRoute() {
   const navigate = useNavigate();
-  const [currentNotification, setCurrentNotification] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  const [authState, setAuthState] = useState<AuthState>({
+    isLoading: false,
+    error: null,
+    isSuccess: false,
+  });
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentNotification((prev) => (prev + 1) % adminNotifications.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleLogin = () => {
+  // ログイン処理
+  const handleLogin = async () => {
     navigate({ to: '/' });
   };
 
-  const getNotificationIcon = (type: string) => {
-    switch (type) {
-      case 'maintenance':
-        return <Zap className="size-4" />;
-      case 'security':
-        return <Lock className="size-4" />;
-      default:
-        return <Sparkles className="size-4" />;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Background Animation Elements */}
-      <div className="absolute inset-0">
-        <FloatingShape className="w-96 h-96 bg-purple-500 top-0 -left-48" delay={0} />
-        <FloatingShape className="w-80 h-80 bg-blue-500 top-1/4 -right-40" delay={1} />
-        <FloatingShape className="w-64 h-64 bg-pink-500 bottom-1/4 left-1/4" delay={2} />
-        <FloatingShape className="w-72 h-72 bg-cyan-500 bottom-0 right-1/3" delay={3} />
+    <div className="min-h-screen bg-background flex">
+      {/* 左側 - ログインフォーム */}
 
-        {/* Grid Pattern */}
-      </div>
-
-      <div className="relative z-10 grid min-h-screen lg:grid-cols-2">
-        {/* お知らせセクション */}
-        <div className="hidden lg:flex items-center justify-center p-12">
-          <div className="max-w-md w-full">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-                <Bell className="size-5 text-purple-300" />
-                <span className="text-white/90 font-medium">お知らせ</span>
-              </div>
-              <h2 className="text-3xl font-bold text-white mb-2">最新情報をお届け</h2>
-              <p className="text-white/60">システムの重要な更新情報をご確認ください</p>
-            </div>
-
-            {/* お知らせカード */}
-            <div className="relative">
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-6 shadow-2xl">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                    {getNotificationIcon(adminNotifications[currentNotification].type)}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-white text-lg mb-2">
-                      {adminNotifications[currentNotification].title}
-                    </h3>
-                    <p className="text-white/70 text-sm leading-relaxed mb-4">
-                      {adminNotifications[currentNotification].content}
-                    </p>
-                    <div className="text-white/40 text-xs">
-                      {new Date(adminNotifications[currentNotification].date).toLocaleDateString(
-                        'ja-JP',
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* インジケーター */}
-              <div className="flex justify-center gap-2 mt-6">
-                {adminNotifications.map((_, index) => (
-                  <Button
-                    key={index}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentNotification ? 'bg-white scale-125' : 'bg-white/30'
-                    }`}
-                    onClick={() => setCurrentNotification(index)}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+      <div className="flex-1 flex items-center justify-center p-8 relative">
+        {/* テーマ切り替えボタン */}
+        <div className="absolute top-6 right-6  flex items-center justify-center">
+          <ModeToggle />
         </div>
 
-        {/* ログインセクション */}
-        <div className="flex items-center justify-center p-8 lg:p-12">
-          <div className="w-full max-w-md">
-            {/* ロゴエリア */}
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 flex items-center justify-center shadow-lg">
-                  <Shield className="size-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-white">Acme Inc.</h1>
-                  <p className="text-white/50 text-sm">Secure Platform</p>
-                </div>
-              </div>
+        <div className="w-full max-w-md space-y-8">
+          {/* ヘッダー */}
+          <div className="text-center space-y-2">
+            <div className="w-16 h-16 mx-auto bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+              <Shield className="w-8 h-8 text-primary" />
+            </div>
+            <h1 className="text-3xl font-bold">Welcome back</h1>
+            <p className="text-muted-foreground">Sign in to your account to continue</p>
+          </div>
+
+          {/* ログインフォーム */}
+          <div className="space-y-6">
+            {/* オプション */}
+
+            {/* ログインボタン */}
+            <Button
+              type="button"
+              onClick={handleLogin}
+              disabled={authState.isLoading}
+              className={cn(
+                'w-full py-3 px-4 rounded-lg font-medium transition-all duration-200',
+                'bg-primary text-primary-foreground hover:bg-primary/90',
+                'disabled:opacity-50 disabled:cursor-not-allowed',
+                'flex items-center justify-center gap-2',
+                authState.isLoading && 'animate-pulse',
+              )}
+            >
+              {authState.isLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                <>
+                  Sign in
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* 右側 - 特徴・ブランディング */}
+      <div className="hidden lg:flex flex-1 bg-primary/5 relative overflow-hidden">
+        <div className="flex flex-col justify-center p-12 relative z-10">
+          {/* 背景装飾 */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/5" />
+          <div className="absolute top-20 right-20 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 left-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl" />
+
+          <div className="relative space-y-8">
+            <div>
+              <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Modern Authentication
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Experience seamless and secure access to your account with our cutting-edge login
+                system.
+              </p>
             </div>
 
-            {/* ログインフォーム */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-3xl border border-white/20 p-8 shadow-2xl">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-white mb-3">ようこそ</h2>
-                <p className="text-white/60">セキュアな認証システムでログインしてください</p>
-              </div>
-
-              <div className="space-y-6">
-                {/* SAML ログインボタン */}
-                <Button
-                  onClick={handleLogin}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                  className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white border-0 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group"
-                >
-                  <Shield className="size-5 mr-3 group-hover:rotate-12 transition-transform duration-300" />
-                  SAML認証でログイン
-                  <ArrowRight
-                    className={`size-5 ml-3 transition-all duration-300 ${isHovered ? 'translate-x-1' : ''}`}
-                  />
-                </Button>
-
-                {/* セキュリティ情報 */}
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                  <div className="flex items-center gap-3 text-white/70">
-                    <Lock className="size-4" />
-                    <span className="text-sm">256ビット暗号化による安全な認証</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* サポート情報 */}
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <p className="text-center text-white/50 text-sm">
-                  ログインでお困りですか？{' '}
-                  <Button className="text-purple-300 hover:text-purple-200 underline underline-offset-2 transition-colors">
-                    サポートに連絡
-                  </Button>
-                </p>
-              </div>
+            <div className="grid gap-6">
+              <FeatureCard
+                icon={<Shield className="w-5 h-5" />}
+                title="Enterprise Security"
+                description="Bank-level encryption and multi-factor authentication to keep your data safe and secure."
+              />
+              <FeatureCard
+                icon={<Zap className="w-5 h-5" />}
+                title="Lightning Fast"
+                description="Optimized performance ensures quick access to your account without compromising security."
+              />
+              <FeatureCard
+                icon={<User className="w-5 h-5" />}
+                title="Personalized Experience"
+                description="Tailored dashboard and preferences that adapt to your workflow and requirements."
+              />
             </div>
 
-            {/* フッター */}
-            <div className="text-center mt-8">
-              <p className="text-white/30 text-xs">© 2025 Acme Inc. Enterprise Security Platform</p>
+            <div className="pt-8">
+              <p className="text-sm text-muted-foreground">
+                Trusted by over <strong className="text-foreground">10,000+</strong> users worldwide
+              </p>
+              <div className="flex items-center gap-2 mt-3">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div
+                      key={i}
+                      className="w-8 h-8 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center"
+                    >
+                      <User className="w-4 h-4 text-primary" />
+                    </div>
+                  ))}
+                </div>
+                <span className="text-xs text-muted-foreground ml-2">and many more...</span>
+              </div>
             </div>
           </div>
         </div>

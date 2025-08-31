@@ -1,5 +1,5 @@
+import { ModeToggle } from '@/components/mode-toggle';
 import { AppBreadcrumb } from './app-breadcrumb';
-import { ModeToggle } from './mode-toggle';
 
 export function Header() {
   return (
