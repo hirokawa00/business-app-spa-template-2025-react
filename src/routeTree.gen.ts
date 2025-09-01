@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as RouteRouteImport } from './routes/route'
-import { Route as AuthenticatedErrorTestRouteImport } from './routes/_authenticated/error-test'
 import { Route as publicUnauthorizedRouteImport } from './routes/(public)/unauthorized'
 import { Route as publicSessionTimeoutRouteImport } from './routes/(public)/session-timeout'
 import { Route as publicNotFoundRouteImport } from './routes/(public)/not-found'
@@ -19,11 +18,9 @@ import { Route as publicMaintenanceRouteImport } from './routes/(public)/mainten
 import { Route as publicLogoutRouteImport } from './routes/(public)/logout'
 import { Route as publicLoginRouteImport } from './routes/(public)/login'
 import { Route as publicErrorRouteImport } from './routes/(public)/error'
-import { Route as AuthenticatedReportRouteRouteImport } from './routes/_authenticated/report/route'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
 import { Route as AuthenticatedReportIndexRouteImport } from './routes/_authenticated/report/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
-import { Route as AuthenticatedComponentIndexRouteImport } from './routes/_authenticated/component/index'
 import { Route as AuthenticatedReportSearchIndexRouteImport } from './routes/_authenticated/report/search/index'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -34,11 +31,6 @@ const RouteRoute = RouteRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedErrorTestRoute = AuthenticatedErrorTestRouteImport.update({
-  id: '/error-test',
-  path: '/error-test',
-  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const publicUnauthorizedRoute = publicUnauthorizedRouteImport.update({
   id: '/(public)/unauthorized',
@@ -75,12 +67,6 @@ const publicErrorRoute = publicErrorRouteImport.update({
   path: '/error',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedReportRouteRoute =
-  AuthenticatedReportRouteRouteImport.update({
-    id: '/report',
-    path: '/report',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
@@ -88,9 +74,9 @@ const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexRouteImport.update({
 } as any)
 const AuthenticatedReportIndexRoute =
   AuthenticatedReportIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedReportRouteRoute,
+    id: '/report/',
+    path: '/report/',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
@@ -98,22 +84,15 @@ const AuthenticatedDashboardIndexRoute =
     path: '/dashboard/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedComponentIndexRoute =
-  AuthenticatedComponentIndexRouteImport.update({
-    id: '/component/',
-    path: '/component/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedReportSearchIndexRoute =
   AuthenticatedReportSearchIndexRouteImport.update({
-    id: '/search/',
-    path: '/search/',
-    getParentRoute: () => AuthenticatedReportRouteRoute,
+    id: '/report/search/',
+    path: '/report/search/',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof RouteRoute
-  '/report': typeof AuthenticatedReportRouteRouteWithChildren
   '/error': typeof publicErrorRoute
   '/login': typeof publicLoginRoute
   '/logout': typeof publicLogoutRoute
@@ -121,10 +100,8 @@ export interface FileRoutesByFullPath {
   '/not-found': typeof publicNotFoundRoute
   '/session-timeout': typeof publicSessionTimeoutRoute
   '/unauthorized': typeof publicUnauthorizedRoute
-  '/error-test': typeof AuthenticatedErrorTestRoute
-  '/component': typeof AuthenticatedComponentIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
-  '/report/': typeof AuthenticatedReportIndexRoute
+  '/report': typeof AuthenticatedReportIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
   '/report/search': typeof AuthenticatedReportSearchIndexRoute
 }
@@ -137,8 +114,6 @@ export interface FileRoutesByTo {
   '/not-found': typeof publicNotFoundRoute
   '/session-timeout': typeof publicSessionTimeoutRoute
   '/unauthorized': typeof publicUnauthorizedRoute
-  '/error-test': typeof AuthenticatedErrorTestRoute
-  '/component': typeof AuthenticatedComponentIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/report': typeof AuthenticatedReportIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
@@ -148,7 +123,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof RouteRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/_authenticated/report': typeof AuthenticatedReportRouteRouteWithChildren
   '/(public)/error': typeof publicErrorRoute
   '/(public)/login': typeof publicLoginRoute
   '/(public)/logout': typeof publicLogoutRoute
@@ -156,8 +130,6 @@ export interface FileRoutesById {
   '/(public)/not-found': typeof publicNotFoundRoute
   '/(public)/session-timeout': typeof publicSessionTimeoutRoute
   '/(public)/unauthorized': typeof publicUnauthorizedRoute
-  '/_authenticated/error-test': typeof AuthenticatedErrorTestRoute
-  '/_authenticated/component/': typeof AuthenticatedComponentIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/report/': typeof AuthenticatedReportIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
@@ -167,7 +139,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/report'
     | '/error'
     | '/login'
     | '/logout'
@@ -175,10 +146,8 @@ export interface FileRouteTypes {
     | '/not-found'
     | '/session-timeout'
     | '/unauthorized'
-    | '/error-test'
-    | '/component'
     | '/dashboard'
-    | '/report/'
+    | '/report'
     | '/users'
     | '/report/search'
   fileRoutesByTo: FileRoutesByTo
@@ -191,8 +160,6 @@ export interface FileRouteTypes {
     | '/not-found'
     | '/session-timeout'
     | '/unauthorized'
-    | '/error-test'
-    | '/component'
     | '/dashboard'
     | '/report'
     | '/users'
@@ -201,7 +168,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
-    | '/_authenticated/report'
     | '/(public)/error'
     | '/(public)/login'
     | '/(public)/logout'
@@ -209,8 +175,6 @@ export interface FileRouteTypes {
     | '/(public)/not-found'
     | '/(public)/session-timeout'
     | '/(public)/unauthorized'
-    | '/_authenticated/error-test'
-    | '/_authenticated/component/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/report/'
     | '/_authenticated/users/'
@@ -244,13 +208,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof RouteRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/error-test': {
-      id: '/_authenticated/error-test'
-      path: '/error-test'
-      fullPath: '/error-test'
-      preLoaderRoute: typeof AuthenticatedErrorTestRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/(public)/unauthorized': {
       id: '/(public)/unauthorized'
@@ -301,13 +258,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicErrorRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/report': {
-      id: '/_authenticated/report'
-      path: '/report'
-      fullPath: '/report'
-      preLoaderRoute: typeof AuthenticatedReportRouteRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/users/': {
       id: '/_authenticated/users/'
       path: '/users'
@@ -317,10 +267,10 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/report/': {
       id: '/_authenticated/report/'
-      path: '/'
-      fullPath: '/report/'
+      path: '/report'
+      fullPath: '/report'
       preLoaderRoute: typeof AuthenticatedReportIndexRouteImport
-      parentRoute: typeof AuthenticatedReportRouteRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
@@ -329,53 +279,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/component/': {
-      id: '/_authenticated/component/'
-      path: '/component'
-      fullPath: '/component'
-      preLoaderRoute: typeof AuthenticatedComponentIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/report/search/': {
       id: '/_authenticated/report/search/'
-      path: '/search'
+      path: '/report/search'
       fullPath: '/report/search'
       preLoaderRoute: typeof AuthenticatedReportSearchIndexRouteImport
-      parentRoute: typeof AuthenticatedReportRouteRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
-interface AuthenticatedReportRouteRouteChildren {
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedReportIndexRoute: typeof AuthenticatedReportIndexRoute
+  AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
   AuthenticatedReportSearchIndexRoute: typeof AuthenticatedReportSearchIndexRoute
 }
 
-const AuthenticatedReportRouteRouteChildren: AuthenticatedReportRouteRouteChildren =
-  {
-    AuthenticatedReportIndexRoute: AuthenticatedReportIndexRoute,
-    AuthenticatedReportSearchIndexRoute: AuthenticatedReportSearchIndexRoute,
-  }
-
-const AuthenticatedReportRouteRouteWithChildren =
-  AuthenticatedReportRouteRoute._addFileChildren(
-    AuthenticatedReportRouteRouteChildren,
-  )
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedReportRouteRoute: typeof AuthenticatedReportRouteRouteWithChildren
-  AuthenticatedErrorTestRoute: typeof AuthenticatedErrorTestRoute
-  AuthenticatedComponentIndexRoute: typeof AuthenticatedComponentIndexRoute
-  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
-  AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
-}
-
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedReportRouteRoute: AuthenticatedReportRouteRouteWithChildren,
-  AuthenticatedErrorTestRoute: AuthenticatedErrorTestRoute,
-  AuthenticatedComponentIndexRoute: AuthenticatedComponentIndexRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedReportIndexRoute: AuthenticatedReportIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
+  AuthenticatedReportSearchIndexRoute: AuthenticatedReportSearchIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

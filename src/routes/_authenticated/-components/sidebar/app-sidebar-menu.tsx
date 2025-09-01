@@ -36,7 +36,7 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: '',
       menus: [
         {
-          href: '/',
+          href: '/dashboard',
           label: 'Home',
           active: pathname === '/dashboard',
           icon: HomeIcon,
@@ -67,20 +67,6 @@ export function getMenuList(pathname: string): Group[] {
             },
           ],
         },
-        {
-          href: '',
-          label: 'Components',
-          active: pathname.includes('/components'),
-          icon: Grid2x2CheckIcon,
-          submenus: [
-            {
-              href: '/components',
-              label: 'Spinners',
-              icon: User,
-              active: pathname.includes('/components'),
-            },
-          ],
-        },
       ],
     },
     {
@@ -89,43 +75,43 @@ export function getMenuList(pathname: string): Group[] {
         {
           href: '/error',
           label: 'Error',
-          icon: AlertTriangleIcon, // 汎用エラー
+          icon: AlertTriangleIcon,
           submenus: [],
         },
         {
           href: '/login',
           label: 'Login',
-          icon: LogInIcon, // ログイン
+          icon: LogInIcon,
           submenus: [],
         },
         {
           href: '/logout',
           label: 'Logout',
-          icon: LogOutIcon, // ログアウト
+          icon: LogOutIcon,
           submenus: [],
         },
         {
           href: '/maintenance',
           label: 'Maintenance',
-          icon: WrenchIcon, // メンテナンス
+          icon: WrenchIcon,
           submenus: [],
         },
         {
           href: '/not-found',
           label: 'NotFound',
-          icon: SearchXIcon, // 見つからない
+          icon: SearchXIcon,
           submenus: [],
         },
         {
           href: '/session-timeout',
           label: 'Session Timeout',
-          icon: TimerIcon, // セッション切れ
+          icon: TimerIcon,
           submenus: [],
         },
         {
           href: '/unauthorized',
           label: 'Unauthorized',
-          icon: ShieldAlertIcon, // 認可エラー
+          icon: ShieldAlertIcon,
           submenus: [],
         },
       ],

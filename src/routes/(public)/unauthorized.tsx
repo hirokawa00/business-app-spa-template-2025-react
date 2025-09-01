@@ -1,14 +1,21 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Shield } from 'lucide-react';
+import { LogIn, Shield } from 'lucide-react';
+import { z } from 'zod';
 import { ActionSection, AnimatedIcon, HelpSection } from './-components/public-shared';
+
+const Params = z.object({
+  errorCode: z.string(),
+});
 
 export const Route = createFileRoute('/(public)/unauthorized')({
   component: AuthErrorPage,
+  validateSearch: Params,
 });
 
 // 認証エラーページ
 function AuthErrorPage() {
   const navigate = useNavigate();
+  const { errorCode = 'xxxxx-xxxxxx' } = Route.useSearch();
 
   const helpItems = [
     {
@@ -42,7 +49,7 @@ function AuthErrorPage() {
                 <p className="text-sm text-muted-foreground">
                   エラーコード:
                   <code className="ml-2 px-2 py-1 bg-muted rounded text-xs font-mono">
-                    AUTH_001
+                    {errorCode}
                   </code>
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
@@ -58,10 +65,15 @@ function AuthErrorPage() {
               title="解決方法"
               actions={[
                 {
-                  name: '再ログイン',
+                  name: 'ログイン画面へ',
                   onClick: () => navigate({ to: '/login' }),
-                  icon: Shield,
+                  icon: LogIn,
                   variant: 'default',
+                },
+                {
+                  name: '権限の付与',
+                  onClick: () => undefined,
+                  icon: Shield,
                 },
               ]}
             />

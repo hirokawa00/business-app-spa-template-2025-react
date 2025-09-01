@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { CheckCircle, Home, LogOut } from 'lucide-react';
+import { CheckCircle, LogIn, X } from 'lucide-react';
 import { ActionSection, AnimatedIcon, HelpSection } from './-components/public-shared';
 
 export const Route = createFileRoute('/(public)/logout')({
@@ -50,13 +50,14 @@ function LogoutPage() {
                 {
                   name: 'ログイン画面へ',
                   onClick: () => navigate({ to: '/login' }),
-                  icon: Home,
+                  icon: LogIn,
                   variant: 'default',
                 },
                 {
                   name: 'ブラウザを閉じる',
                   onClick: () => window.close(),
-                  icon: LogOut,
+                  icon: X,
+                  variant: 'default',
                 },
               ]}
             />

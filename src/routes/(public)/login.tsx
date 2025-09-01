@@ -1,25 +1,10 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
-import {
-  ArrowRight,
-  CheckCircle,
-  Chrome,
-  Eye,
-  EyeOff,
-  Github,
-  Lock,
-  Mail,
-  Moon,
-  Shield,
-  Sun,
-  User,
-  Zap,
-} from 'lucide-react';
+import { LogIn, Shield, User, Zap } from 'lucide-react';
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 export const Route = createFileRoute('/(public)/login')({
   component: LoginRoute,
@@ -51,9 +36,9 @@ const FeatureCard: React.FC<{
 );
 
 // メインログインページコンポーネント
-function LoginRoute() {
+export function LoginRoute() {
   const navigate = useNavigate();
-  const [authState, setAuthState] = useState<AuthState>({
+  const [authState] = useState<AuthState>({
     isLoading: false,
     error: null,
     isSuccess: false,
@@ -61,7 +46,7 @@ function LoginRoute() {
 
   // ログイン処理
   const handleLogin = async () => {
-    navigate({ to: '/' });
+    navigate({ to: '/dashboard' });
   };
 
   return (
@@ -89,18 +74,7 @@ function LoginRoute() {
             {/* オプション */}
 
             {/* ログインボタン */}
-            <Button
-              type="button"
-              onClick={handleLogin}
-              disabled={authState.isLoading}
-              className={cn(
-                'w-full py-3 px-4 rounded-lg font-medium transition-all duration-200',
-                'bg-primary text-primary-foreground hover:bg-primary/90',
-                'disabled:opacity-50 disabled:cursor-not-allowed',
-                'flex items-center justify-center gap-2',
-                authState.isLoading && 'animate-pulse',
-              )}
-            >
+            <Button onClick={handleLogin} disabled={authState.isLoading} className="w-full">
               {authState.isLoading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -109,7 +83,7 @@ function LoginRoute() {
               ) : (
                 <>
                   Sign in
-                  <ArrowRight className="w-4 h-4" />
+                  <LogIn className="w-4 h-4" />
                 </>
               )}
             </Button>

@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { RefreshCw, Settings } from 'lucide-react';
+import { LogIn, Settings } from 'lucide-react';
 import { ActionSection, AnimatedIcon, HelpSection } from './-components/public-shared';
 
 export const Route = createFileRoute('/(public)/maintenance')({
@@ -57,9 +57,10 @@ function MaintenancePage() {
               title="利用可能なアクション"
               actions={[
                 {
-                  name: '時間をおいて再度アクセスをしてください。',
+                  name: '時間をおいてアクセスをしてください。',
                   onClick: () => navigate({ to: '/login' }),
-                  icon: RefreshCw,
+                  icon: LogIn,
+                  variant: 'default',
                 },
               ]}
             />

@@ -1,17 +1,19 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { CircleAlert, Home } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { CircleAlert, LogIn } from 'lucide-react';
+import { z } from 'zod';
 import { ActionSection, AnimatedIcon, HelpSection } from './-components/public-shared';
+
+const Params = z.object({
+  message: z.string(),
+});
 
 export const Route = createFileRoute('/(public)/error')({
   component: ErrorPage,
-  validateSearch: (search: Record<string, unknown>) => {
-    return { message: String(search.message ?? '') };
-  },
+  validateSearch: Params,
 });
 
 function ErrorPage() {
-  const { message } = Route.useSearch();
+  const { message = 'xxxxxxxxxxxxxx' } = Route.useSearch();
   const navigate = useNavigate();
 
   const helpItems = [
@@ -36,14 +38,17 @@ function ErrorPage() {
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 ご迷惑をおかけしています。以下の理由でシステムエラーが発生しました。
               </p>
-              {message && (
-                <Alert variant="destructive" className="flex flex-col items-center justify-center">
-                  <AlertTitle className="mb-2">
-                    <CircleAlert />
-                  </AlertTitle>
-                  <AlertDescription>エラー理由: {message}</AlertDescription>
-                </Alert>
-              )}
+              <div className="mt-4">
+                <p className="text-sm text-muted-foreground">
+                  エラー理由:
+                  <code className="ml-2 px-2 py-1 bg-muted rounded text-xs font-mono">
+                    {message}
+                  </code>
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  発生時刻: {new Date().toLocaleString('ja-JP')}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -55,7 +60,7 @@ function ErrorPage() {
                 {
                   name: 'ログイン画面へ',
                   onClick: () => navigate({ to: '/login' }),
-                  icon: Home,
+                  icon: LogIn,
                   variant: 'default',
                 },
               ]}

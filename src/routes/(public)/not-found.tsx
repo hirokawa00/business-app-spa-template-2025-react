@@ -1,18 +1,20 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { CircleAlert, NonBinary, RefreshCw } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { LogIn, SearchX, Undo } from 'lucide-react';
+import { z } from 'zod';
 import { ActionSection, AnimatedIcon, HelpSection } from './-components/public-shared';
+
+const Params = z.object({
+  path: z.string(),
+});
 
 export const Route = createFileRoute('/(public)/not-found')({
   component: NotFoundPage,
-  validateSearch: (search: Record<string, unknown>) => {
-    return { from: String(search.from ?? '') };
-  },
+  validateSearch: Params,
 });
 
 // メインコンポーネント
 export default function NotFoundPage() {
-  const { from } = Route.useSearch();
+  const { path = '/xxxx' } = Route.useSearch();
   const navigate = useNavigate();
 
   const helpItems = [
@@ -32,7 +34,7 @@ export default function NotFoundPage() {
         <div className="text-center space-y-8">
           <div className="space-y-6">
             <div className="flex justify-center">
-              <AnimatedIcon Icon={NonBinary} bgColor="destructive/20" iconColor="destructive/60" />
+              <AnimatedIcon Icon={SearchX} bgColor="destructive/20" iconColor="destructive/60" />
             </div>
             <div className="space-y-2">
               <h1 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -41,14 +43,18 @@ export default function NotFoundPage() {
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 申し訳ございません。お探しのページは存在しないか、移動された可能性があります。
               </p>
-              {from && (
-                <Alert variant="default" className="flex flex-col items-center justify-center">
-                  <AlertTitle className="mb-2">
-                    <CircleAlert />
-                  </AlertTitle>
-                  <AlertDescription>アクセスしようとしたURL: {from}</AlertDescription>
-                </Alert>
-              )}
+
+              <div className="mt-4">
+                <p className="text-sm text-muted-foreground">
+                  アクセスしようとしたURL:
+                  <code className="ml-2 px-2 py-1 bg-primary-foreground rounded text-xs font-mono">
+                    {path}
+                  </code>
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  発生時刻: {new Date().toLocaleString('ja-JP')}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -58,14 +64,16 @@ export default function NotFoundPage() {
               title="利用可能なアクション"
               actions={[
                 {
-                  name: 'ホーム画面に戻る.',
-                  onClick: () => navigate({ to: '/' }),
-                  icon: RefreshCw,
+                  name: 'ホーム画面へ',
+                  onClick: () => navigate({ to: '/dashboard' }),
+                  icon: Undo,
+                  variant: 'default',
                 },
                 {
-                  name: 'ログインからやり直す。',
+                  name: 'ログイン画面へ',
                   onClick: () => navigate({ to: '/login' }),
-                  icon: RefreshCw,
+                  icon: LogIn,
+                  variant: 'default',
                 },
               ]}
             />
