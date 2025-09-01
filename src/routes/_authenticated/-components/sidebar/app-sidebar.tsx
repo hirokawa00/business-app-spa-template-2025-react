@@ -1,7 +1,6 @@
 import { Link, useLocation } from '@tanstack/react-router';
 import { ChevronRight, GalleryVerticalEnd, Pin, PinOff } from 'lucide-react';
 import type * as React from 'react';
-import { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   Sidebar,
@@ -19,6 +18,7 @@ import {
   SidebarRail,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 import { getMenuList } from './app-sidebar-menu';
 
 /**
@@ -30,7 +30,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { pathname } = useLocation();
   const { setOpen } = useSidebar();
   const menuList = getMenuList(pathname);
-  const [pinned, setPinned] = useState(false);
+  const [pinned, setPinned] = useLocalStorage('sidebar_pinned', true);
 
   return (
     <Sidebar
