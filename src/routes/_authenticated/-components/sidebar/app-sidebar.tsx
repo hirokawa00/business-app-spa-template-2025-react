@@ -1,5 +1,5 @@
 import { Link, useLocation } from '@tanstack/react-router';
-import { ChevronRight, GalleryVerticalEnd, Pin, PinOff } from 'lucide-react';
+import { ChevronRight, LayoutDashboard, Pin, PinOff } from 'lucide-react';
 import type * as React from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
@@ -47,17 +47,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenuButton
           size="lg"
-          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-sidebar-accent/50"
           onClick={() => setPinned(!pinned)}
         >
-          <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-            <GalleryVerticalEnd className="size-4" />
+          {/* 左側アイコン */}
+          <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-9 items-center justify-center rounded-xl shadow-sm">
+            <LayoutDashboard className="size-5" />
           </div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-medium">activeTeam</span>
-            <span className="truncate text-xs">activeTeam</span>
+
+          {/* 中央：システム名 */}
+          <div className="flex-1 grid text-left leading-tight">
+            <span className="truncate font-semibold text-base">Business Application</span>
+            <span className="truncate text-xs text-muted-foreground">Templeat</span>
           </div>
-          <div>{pinned ? <Pin className="h-5 w-5" /> : <PinOff className="h-5 w-5" />}</div>
+
+          {/* 右側：ピン操作 */}
+          <div className="text-muted-foreground">
+            {pinned ? <Pin className="h-5 w-5" /> : <PinOff className="h-5 w-5" />}
+          </div>
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
