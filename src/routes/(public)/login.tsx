@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
-import { LogIn, Shield, User, Zap } from 'lucide-react';
+import { LayoutDashboard, LogIn, ShieldCheck, User, Zap } from 'lucide-react';
 import type React from 'react';
 import { useState } from 'react';
 import { ModeToggle } from '@/components/mode-toggle';
@@ -63,10 +63,12 @@ export function LoginRoute() {
           {/* ヘッダー */}
           <div className="text-center space-y-2">
             <div className="w-16 h-16 mx-auto bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
-              <Shield className="w-8 h-8 text-primary" />
+              <LayoutDashboard className="w-8 h-8 text-primary" />
             </div>
             <h1 className="text-3xl font-bold">Welcome back</h1>
-            <p className="text-muted-foreground">Sign in to your account to continue</p>
+            <p className="text-muted-foreground">
+              システムの利用を開始するにはログインしてください
+            </p>
           </div>
 
           {/* ログインフォーム */}
@@ -78,11 +80,11 @@ export function LoginRoute() {
               {authState.isLoading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  Signing in...
+                  ログイン
                 </>
               ) : (
                 <>
-                  Sign in
+                  ログイン
                   <LogIn className="w-4 h-4" />
                 </>
               )}
@@ -102,35 +104,35 @@ export function LoginRoute() {
           <div className="relative space-y-8">
             <div>
               <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Modern Authentication
+                業務アプリ テンプレート
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Experience seamless and secure access to your account with our cutting-edge login
-                system.
+                日々の業務を効率化し、安全で快適な操作体験を提供するための標準UIテンプレートです。
               </p>
             </div>
 
             <div className="grid gap-6">
               <FeatureCard
-                icon={<Shield className="w-5 h-5" />}
-                title="Enterprise Security"
-                description="Bank-level encryption and multi-factor authentication to keep your data safe and secure."
+                icon={<ShieldCheck className="w-5 h-5 text-primary" />}
+                title="モダンな技術"
+                description="Zodによる入力バリデーション、Radix UIのアクセシビリティ標準準拠、型安全なTanStack Routerにより、安全かつ信頼性の高い業務アプリを実現しています。"
               />
               <FeatureCard
                 icon={<Zap className="w-5 h-5" />}
-                title="Lightning Fast"
-                description="Optimized performance ensures quick access to your account without compromising security."
+                title="スピーディな操作性"
+                description="軽量かつ最適化された設計により、快適な操作とスムーズな画面遷移を実現します。"
               />
               <FeatureCard
                 icon={<User className="w-5 h-5" />}
-                title="Personalized Experience"
-                description="Tailored dashboard and preferences that adapt to your workflow and requirements."
+                title="ユーザー中心設計"
+                description="利用者の業務フローに合わせて柔軟にカスタマイズできるダッシュボードを提供します。"
               />
             </div>
 
             <div className="pt-8">
-              <p className="text-sm text-muted-foreground">
-                Trusted by over <strong className="text-foreground">10,000+</strong> users worldwide
+              {/* <p className="text-sm text-muted-foreground">
+                すでに <strong className="text-foreground">10,000社以上</strong>{' '}
+                の現場で導入実績があります
               </p>
               <div className="flex items-center gap-2 mt-3">
                 <div className="flex -space-x-2">
@@ -143,8 +145,10 @@ export function LoginRoute() {
                     </div>
                   ))}
                 </div>
-                <span className="text-xs text-muted-foreground ml-2">and many more...</span>
-              </div>
+                <span className="text-xs text-muted-foreground ml-2">
+                  さらに多くの企業に拡大中…
+                </span>
+              </div> */}
             </div>
           </div>
         </div>
