@@ -36,7 +36,7 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: '',
       menus: [
         {
-          href: '',
+          href: '/dashboard',
           label: 'Home',
           active: pathname.includes('/dashboard'),
           icon: HomeIcon,
@@ -48,7 +48,6 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: 'Authenticated',
       menus: [
         {
-          href: '',
           label: 'Data view',
           active: pathname.includes('/users') || pathname.includes('/report'),
           icon: Grid2x2CheckIcon,
