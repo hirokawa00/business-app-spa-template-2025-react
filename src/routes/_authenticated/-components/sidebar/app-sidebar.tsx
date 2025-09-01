@@ -73,7 +73,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       isActive={menu.active}
                       className="h-9"
                     >
-                      <Link to={menu.href}>
+                      <Link to={String(menu.href)}>
                         <menu.icon className="size-6" />
                         <span>{menu.label}</span>
                       </Link>
@@ -107,7 +107,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 isActive={submenu.active}
                                 className="h-7"
                               >
-                                <Link to={submenu.href}>
+                                <Link to={String(submenu.href)}>
                                   {submenu.icon && <submenu.icon />}
                                   <span>{submenu.label}</span>
                                 </Link>

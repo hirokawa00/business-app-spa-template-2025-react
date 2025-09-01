@@ -17,12 +17,12 @@ import type { AppRoutePaths } from '@/types/route';
 export interface Group {
   groupLabel: string;
   menus: {
-    href: AppRoutePaths;
+    href?: AppRoutePaths;
     label: string;
     active?: boolean;
     icon: LucideIcon;
     submenus: {
-      href: string;
+      href?: AppRoutePaths;
       label: string;
       active: boolean;
       icon?: LucideIcon;
@@ -36,9 +36,9 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: '',
       menus: [
         {
-          href: '/dashboard',
+          href: '',
           label: 'Home',
-          active: pathname === '/dashboard',
+          active: pathname.includes('/dashboard'),
           icon: HomeIcon,
           submenus: [],
         },
