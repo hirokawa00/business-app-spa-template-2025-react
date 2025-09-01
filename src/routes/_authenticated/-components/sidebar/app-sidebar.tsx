@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/sidebar';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { getMenuList } from './app-sidebar-menu';
+import { NavUser } from './nav-user';
 
 /**
  * サイドバー
@@ -124,7 +125,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <SidebarFooter />
+
+      <SidebarFooter>
+        <NavUser />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
