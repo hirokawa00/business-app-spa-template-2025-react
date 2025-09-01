@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { ActionSection, AnimatedIcon, HelpSection } from './-components/public-shared';
 
 const Params = z.object({
-  path: z.string(),
+  path: z.string().optional,
 });
 
 export const Route = createFileRoute('/(public)/not-found')({
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/(public)/not-found')({
 
 // メインコンポーネント
 export default function NotFoundPage() {
-  const { path = '/xxxx' } = Route.useSearch();
+  const { path = '/xxxx' } = Route.useSearch() as { path?: string };
   const navigate = useNavigate();
 
   const helpItems = [

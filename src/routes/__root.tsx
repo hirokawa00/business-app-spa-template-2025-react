@@ -25,7 +25,7 @@ export function NotFoundRedirect() {
   const fromPath = router.state.location.pathname;
 
   useEffect(() => {
-    navigate({ to: '/not-found', search: { from: fromPath } });
+    navigate({ to: '/not-found', search: { path: fromPath } });
   }, [navigate, fromPath]);
 
   return null;
