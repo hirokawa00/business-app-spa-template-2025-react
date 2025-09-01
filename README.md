@@ -1,69 +1,52 @@
-# React + TypeScript + Vite
+# Business Application SPA Template 2025 (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+業務アプリケーションの開発を効率化するための **React + Vite ベース SPA テンプレート** です。  
+UI には [shadcn/ui](https://ui.shadcn.com/) と [Radix UI](https://www.radix-ui.com/) を活用し、  
+ルーティングやテーブル管理など、業務アプリでよく利用される機能を組み込みやすい構成にしています。
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Demo
 
-## Expanding the ESLint configuration
+![alt](./app.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+このアプリはVercelでホストされています。[こちら](https://business-app-spa-template-2025-reac.vercel.app/)をクリックしてアクセスしてください。
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## ✨ 特長
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **最新技術構成**  
+  React 19, Vite 7, TypeScript 5.8, TailwindCSS 4 を採用  
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **UI/UX**  
+  - shadcn/ui, Radix UI によるアクセシブルな UI コンポーネント  
+  - lucide-react のアイコンセット  
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **ルーティング**  
+  - [TanStack Router](https://tanstack.com/router) による型安全なルーティング  
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **データ表示**  
+  - [TanStack Table](https://tanstack.com/table) による柔軟なテーブル管理  
+
+- **開発効率**  
+  - Biome による統一された Lint & Format  
+  - Volta による Node.js バージョン固定  
+  - pnpm による高速パッケージ管理  
+
+---
+
+## 📦 セットアップ
+
+```bash
+# 依存関係をインストール
+pnpm install
+
+# 開発サーバー起動
+pnpm dev
+
+# 本番ビルド
+pnpm build
+
+# Lint & Format (Biome)
+pnpm lint
