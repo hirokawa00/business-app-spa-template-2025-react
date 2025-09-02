@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { ActionSection, AnimatedIcon, HelpSection } from './-components/public-shared';
 
 const Params = z.object({
-  path: z.string().optional,
+  path: z.string().optional(),
 });
 
 export const Route = createFileRoute('/(public)/not-found')({
